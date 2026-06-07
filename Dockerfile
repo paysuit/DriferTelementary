@@ -20,6 +20,4 @@ EXPOSE 8080
 
 CMD ["./server"]
 
-LABEL authors="Madegwa"
-
-ENTRYPOINT ["top", "-b"]
+#LABEL authors="Madegwa"
