@@ -13,8 +13,8 @@ RUN go build -o ./bin
 From alpine:3.20
 
 WORKDIR /app
-COPY --from=builder /build/bin .
+COPY --from=builder /app/bin .
 
 EXPOSE 8080
 
-CMD ["./app"]
+CMD ["./bin"]
