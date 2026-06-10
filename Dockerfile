@@ -26,9 +26,9 @@ FROM golang:1.26-alpine AS builder
 
 WORKDIR /app
 
-COPY go.mod .
-COPY main.go .
+COPY . .
 
+RUN go mod download
 RUN go build -o server main.go
 
 # ---- Run stage ----
