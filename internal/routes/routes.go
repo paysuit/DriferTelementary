@@ -1,4 +1,4 @@
-package main
+package routes
 
 import (
 	"encoding/json"
@@ -241,9 +241,7 @@ func parseID(path string) (int, error) {
 	return strconv.Atoi(parts[len(parts)-1])
 }
 
-// --- Main ---
-
-func main() {
+func NewRouter() http.Handler {
 	store := NewStore()
 	server := NewServer(store)
 
@@ -253,11 +251,6 @@ func main() {
 	mux.HandleFunc("/items", server.itemsRouter)
 	mux.HandleFunc("/items/", server.itemsRouter)
 
-	handler := loggingMiddleware(mux)
+	return loggingMiddleware(mux)
 
-	addr := ":8080"
-	log.Printf("Server listening on %s", addr)
-	if err := http.ListenAndServe(addr, handler); err != nil {
-		log.Fatal(err)
-	}
 }
