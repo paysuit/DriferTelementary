@@ -1,23 +1,20 @@
 
 # ---- Build stage ----
-FROM golang:1.26-alpine AS builder
+FROM golang:1.26-alpine as builder
 
-WORKDIR /app
+WORKDIR /build
+#copy source to dest which is the working directory
+COPY . .
 
-COPY go.mod .
-COPY main.go .
-
-RUN go build -o server main.go
+RUN go mod download
+RUN go build -o ./bin
 
 # ---- Run stage ----
-FROM alpine:3.20
+From alpine:3.20
 
 WORKDIR /app
-
-COPY --from=builder /app/server .
+COPY --from-builder /build/bin .
 
 EXPOSE 8080
 
-CMD ["./server"]
-
-#LABEL authors="Madegwa"
+CMD ["./app"]
